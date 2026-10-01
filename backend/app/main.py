@@ -34,5 +34,23 @@ def health() -> dict[str, object]:
 
 @app.get("/api/overview")
 def overview() -> dict[str, object]:
-    """运营概览：把各业务模块的待处理量汇总成看板卡片。"""
-    return store.overview()
+    """运营概览：把各业务模块的待处理量汇总成看板卡片。
+
+    出海窗口调度的可用/占用船数与窗口状态直接取 SeawindowService.summary()，
+    看板与窗口台账共用同一口径，不允许两边各算各的。
+    """
+    from app.services.seawindow import SeawindowService
+
+    data = store.overview()
+    sea = SeawindowService().summary()
+    data["modules"].append({
+        "name": "出海窗口调度",
+        "created": sea["窗口总数"],
+        "pending": sea["计划中"] + sea["窗口顺延"],
+        "abnormal": sea["窗口顺延"],
+    })
+    data["cards"].extend([
+        {"label": "可用船舶", "value": sea["可用船舶"]},
+        {"label": "占用船舶", "value": sea["占用船舶"]},
+    ])
+    return data

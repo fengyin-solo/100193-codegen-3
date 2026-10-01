@@ -24,5 +24,6 @@ from app.routers import spare as router_spare
 from app.routers import patrol as router_patrol
 from app.routers import accept as router_accept
 from app.routers import settle as router_settle
+from app.routers import seawindow as router_seawindow
 
-ROUTERS = [router_windfarm, router_turbine, router_blade, router_gearbox, router_generator, router_pitch, router_yaw, router_metmast, router_collector, router_substation, router_forecast, router_vibration, router_defect, router_maintjob, router_spare, router_patrol, router_accept, router_settle]
+ROUTERS = [router_windfarm, router_turbine, router_blade, router_gearbox, router_generator, router_pitch, router_yaw, router_metmast, router_collector, router_substation, router_forecast, router_vibration, router_defect, router_maintjob, router_spare, router_patrol, router_accept, router_settle, router_seawindow]

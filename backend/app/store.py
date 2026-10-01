@@ -8,6 +8,10 @@ from typing import Any
 
 from app.seed import SEED_ROWS
 
+# 看板只统计通用业务台账；出海窗口的船舶池/占用历史是内部表，
+# 其指标由 seawindow 服务统一计算后在 /api/overview 里单独汇入。
+OVERVIEW_EXCLUDE = {"seawindow_window", "seawindow_vessel", "seawindow_occupancy"}
+
 
 class Store:
     def __init__(self) -> None:
@@ -30,6 +34,8 @@ class Store:
     def overview(self) -> dict[str, object]:
         modules: list[dict[str, object]] = []
         for name in self.module_names():
+            if name in OVERVIEW_EXCLUDE:
+                continue
             rows = self.rows(name)
             modules.append({
                 "name": name,
