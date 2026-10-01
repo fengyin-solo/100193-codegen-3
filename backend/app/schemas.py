@@ -244,3 +244,37 @@ class SettleEntry(BaseModel):
     field_5: str | None = None  # 补贴金额
     field_6: str | None = None  # 结算金额
     field_7: str | None = None  # 结算状态
+
+class SeawindowEntry(BaseModel):
+    """出海窗口明细结构。"""
+
+    field_0: str | None = None  # 窗口编号
+    field_1: str | None = None  # 作业场站
+    field_2: str | None = None  # 海况等级
+    field_3: str | None = None  # 预计离岸时段
+    field_4: str | None = None  # 随船人员
+    field_5: str | None = None  # 作业船舶
+    field_6: str | None = None  # 顺延原因
+    field_7: str | None = None  # 窗口状态
+
+class VesselEntry(BaseModel):
+    """作业船舶明细结构。"""
+
+    field_0: str | None = None  # 船舶编号
+    field_1: str | None = None  # 船舶名称
+    field_2: str | None = None  # 船舶类型
+    field_3: str | None = None  # 载员上限
+    field_4: str | None = None  # 所属单位
+    field_5: str | None = None  # 船舶状态
+
+class OccupancyEntry(BaseModel):
+    """船舶占用记录明细结构。"""
+
+    field_0: str | None = None  # 占用编号
+    field_1: str | None = None  # 窗口编号
+    field_2: str | None = None  # 作业船舶
+    field_3: str | None = None  # 随船人员
+    field_4: str | None = None  # 提交时间
+    field_5: str | None = None  # 释放时间
+    field_6: str | None = None  # 释放原因
+    field_7: str | None = None  # 占用状态

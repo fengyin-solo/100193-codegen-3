@@ -10,6 +10,7 @@ from fastapi.middleware.cors import CORSMiddleware
 
 from app.config import settings
 from app.routers import ROUTERS
+from app.services.seawindow import SeawindowService
 from app.store import store
 
 app = FastAPI(title="风电场机组运维平台", version="1.0.0")
@@ -34,5 +35,12 @@ def health() -> dict[str, object]:
 
 @app.get("/api/overview")
 def overview() -> dict[str, object]:
-    """运营概览：把各业务模块的待处理量汇总成看板卡片。"""
-    return store.overview()
+    """运营概览：把各业务模块的待处理量汇总成看板卡片。
+
+    可用船舶数与出海窗口台账读同一份船队口径，看板不会和台账对不上。
+    """
+    payload = store.overview()
+    fleet = SeawindowService().fleet_summary()
+    payload["cards"].append({"label": "可用船舶", "value": fleet["可用"]})
+    payload["fleet"] = fleet
+    return payload
